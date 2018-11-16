@@ -1,13 +1,14 @@
-
 package tela;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import simplex.Matriz;
 import simplex.Restricao;
 
 public class Modelagem extends javax.swing.JFrame {
 
     ArrayList<Restricao> restricoes = new ArrayList<>();
-    static ArrayList<Restricao> restricoesSTC = new ArrayList<>();
+    static ArrayList<Restricao> restricoesSTC;// = new ArrayList<>();
     float[] funcaoOtimizadora;
     static float[] fnOtimizadora;
     String tipo;
@@ -33,7 +34,7 @@ public class Modelagem extends javax.swing.JFrame {
         jPanelAdiciona = new javax.swing.JPanel();
         jButtonAddRestricao = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaRestricoes = new javax.swing.JTextArea();
         jButton3 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextAreaFuncaoOtimizadora = new javax.swing.JTextArea();
@@ -43,7 +44,7 @@ public class Modelagem extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jComboBoxTipoRelacao = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jButton1.setText("Confirmar");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -61,9 +62,9 @@ public class Modelagem extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jTextAreaRestricoes.setColumns(20);
+        jTextAreaRestricoes.setRows(5);
+        jScrollPane1.setViewportView(jTextAreaRestricoes);
 
         jButton3.setText("Definir Funcao otimizadora");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -183,6 +184,7 @@ public class Modelagem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
         if (!jTextFieldQntVariaveis.getText().isEmpty()) {
             int qntVariaveis = Integer.parseInt(jTextFieldQntVariaveis.getText());
             Restricao.setQntVariaveis(qntVariaveis);
@@ -195,7 +197,11 @@ public class Modelagem extends javax.swing.JFrame {
                 tipo = "min";
             }
             jPanelAdiciona.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Insira o numero de variaveis a serem utilizadas no probelma!");
         }
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -217,12 +223,23 @@ public class Modelagem extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAddRestricaoActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        restricoes = restricoesSTC;
-        imprimeRestricoes();
+        if (restricoesSTC != null) {
+            restricoes = restricoesSTC;
+            imprimeRestricoes();
+        } else {
+            JOptionPane.showMessageDialog(null, "Insira uma restriçao antes!");
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        restricoes = restricoesSTC;
+        if (restricoesSTC != null) {
+            restricoes = restricoesSTC;
+            Matriz matriz = new Matriz(restricoes, funcaoOtimizadora);
+            Principal.setMatrizStc(matriz);
+            this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Insira um modelo de problema antes!");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
@@ -239,8 +256,8 @@ public class Modelagem extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelAdiciona;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextAreaFuncaoOtimizadora;
+    private javax.swing.JTextArea jTextAreaRestricoes;
     private javax.swing.JTextField jTextFieldQntVariaveis;
     // End of variables declaration//GEN-END:variables
 
@@ -261,26 +278,35 @@ public class Modelagem extends javax.swing.JFrame {
     }
 
     public static void addRestricao(Restricao restricao) {
+        if (restricoesSTC == null) {
+            restricoesSTC = new ArrayList<>();
+        }
         if (!restricoesSTC.contains(restricao)) {
             restricoesSTC.add(restricao);
         }
+
     }
 
     private void imprimeRestricoes() {
         String str = "";
-        for (int j = 0; j < 10; j++) {
+        for (int j = 0; j < restricoes.size(); j++) {
             for (int i = 0; i < restricoes.get(j).getCoeficientes().length; i++) {
                 if (restricoes.get(j).getCoeficientes()[i] > 0) {
                     String coeficiente = String.format("%.0f", restricoes.get(j).getCoeficientes()[i]);
-                    str += "+" + coeficiente + " x" + (i + 1);
+                    str += "+ " + coeficiente + " x" + (i + 1);
                 }
                 if (restricoes.get(j).getCoeficientes()[i] < 0) {
                     String coeficiente = String.format("%.0f", restricoes.get(j).getCoeficientes()[i]);
-                    str += "-" + coeficiente + " x" + (i + 1);
+                    str += coeficiente + " x" + (i + 1);
                 }
             }
-
-            jTextAreaFuncaoOtimizadora.setText(str);
+            str += " " + restricoes.get(j).getRelacao();
+            if (restricoes.get(j).getB() >= 0) {
+                str += " + " + restricoes.get(j).getB();
+            } else {
+                str += " " + restricoes.get(j).getB();
+            }
         }
+        jTextAreaRestricoes.setText(str);
     }
 }

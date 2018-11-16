@@ -1,5 +1,7 @@
 package tela;
 
+import javax.swing.JOptionPane;
+
 public class FuncaoOtimizadora extends javax.swing.JFrame {
 
     float coeficiente;
@@ -63,14 +65,17 @@ public class FuncaoOtimizadora extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        coeficiente = Float.parseFloat(jTextFieldCoeficiente.getText());
-        if (tipo.equals("min")) {
-            Modelagem.addCoeficiente(coeficiente, i);
+        if (!jTextFieldCoeficiente.getText().isEmpty()) {
+            coeficiente = Float.parseFloat(jTextFieldCoeficiente.getText());
+            if (tipo.equals("min")) {
+                Modelagem.addCoeficiente(coeficiente, i);
+            } else {
+                Modelagem.addCoeficiente(-coeficiente, i);
+            }
+            this.dispose();
         } else {
-            Modelagem.addCoeficiente(-coeficiente, i);
+            JOptionPane.showMessageDialog(null, "Insira uma restriçao antes!");
         }
-        this.dispose();
-
     }//GEN-LAST:event_jButton2ActionPerformed
 
     float getCoeficiente() {
