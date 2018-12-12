@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import simplex.Matriz;
 import simplex.Restricao;
 
-public class teste {
-
+public class teste2 {
+    
     public Matriz matriz;
-
+    
     public static void main(String[] args) {
 //        float[] c1 = {1.0f, 2.0f, 3.0f};
 //        float[] c2 = {10.0f, 20.0f, 30.0f};
@@ -18,14 +18,14 @@ public class teste {
 //        Restricao r2 = new Restricao( c2, "teste", ">=", 40);
 //        Restricao r3 = new Restricao( c3, "teste", ">=", 400);
 
-        float[] c1 = {1.0f, 0.0f};
-        float[] c2 = {0.0f, 2.0f};
-        float[] c3 = {3.0f, 2.0f};
-        float[] c4 = {3.0f, 5.0f};
+        float[] c1 = {1.0f, 6.0f};
+        float[] c2 = {4.0f, 3.0f};
+        float[] c3 = {1.0f, 2.0f};
+        float[] c4 = {15.0f, 32.0f};
         Restricao.setQntVariaveis(2);
-        Restricao r1 = new Restricao( c1, "teste", "<=", 4);
-        Restricao r2 = new Restricao( c2, "teste", "<=", 12);
-        Restricao r3 = new Restricao( c3, "teste", "=", 18);
+        Restricao r1 = new Restricao(c1, "teste", ">=", 7);
+        Restricao r2 = new Restricao(c2, "teste", ">=", 12);
+        Restricao r3 = new Restricao(c3, "teste", "=", 18);
         
         ArrayList<Restricao> restricoes = new ArrayList<>();
         
@@ -73,21 +73,24 @@ public class teste {
 //            str += "\n";
 //        }
 //        System.out.println(str);
-        
+
         //matriz.getLinhaMenorPP(matriz.getColunaMenorValorZ(restricoes));
 //        imprimir(matriz);
-//        matriz.isAjustado();
+        matriz.isAjustado();
+        imprimir(matriz);
+matriz.resolveSimplex(restricoes);
+        imprimir(matriz);
 //        matriz.interacao(matriz.getLinhaMenorPP(matriz.getColunaMenorValorZ(restricoes)), matriz.getColunaMenorValorZ(restricoes));
-//        
-//        imprimir(matriz);
+//      imprimir(matriz);
 //        matriz.interacao(matriz.getLinhaMenorPP(matriz.getColunaMenorValorZ(restricoes)), matriz.getColunaMenorValorZ(restricoes));
-//        imprimir(matriz);
+//      imprimir(matriz);
 //        matriz.interacao(matriz.getLinhaMenorPP(matriz.getColunaMenorValorZ(restricoes)), matriz.getColunaMenorValorZ(restricoes));
-          matriz.resolveSimplex(restricoes);
-          imprimir(matriz);
+//      imprimir(matriz);
+     
+
     }
     
-    public static void imprimir(Matriz matriz){
+    public static void imprimir(Matriz matriz) {
         
         String str = "\t";
         for (int i = 0; i < matriz.getCoeficientes()[0].length; i++) {
@@ -129,6 +132,6 @@ public class teste {
 //            str += "\n";
 //        }
 //        System.out.println(str);
-    
+
     }
 }

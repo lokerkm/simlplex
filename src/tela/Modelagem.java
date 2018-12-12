@@ -11,7 +11,7 @@ public class Modelagem extends javax.swing.JFrame {
     static ArrayList<Restricao> restricoesSTC;// = new ArrayList<>();
     float[] funcaoOtimizadora;
     static float[] fnOtimizadora;
-    String tipo;
+   public String tipo;
 
     public Modelagem() {
         initComponents();
@@ -28,6 +28,7 @@ public class Modelagem extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jButton1 = new javax.swing.JButton();
         jTextFieldQntVariaveis = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -40,6 +41,7 @@ public class Modelagem extends javax.swing.JFrame {
         jTextAreaFuncaoOtimizadora = new javax.swing.JTextArea();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         jButton4 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jComboBoxTipoRelacao = new javax.swing.JComboBox<>();
@@ -91,6 +93,8 @@ public class Modelagem extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setText("OBS: Insira os coeficientes da forma CÂNONICA");
+
         javax.swing.GroupLayout jPanelAdicionaLayout = new javax.swing.GroupLayout(jPanelAdiciona);
         jPanelAdiciona.setLayout(jPanelAdicionaLayout);
         jPanelAdicionaLayout.setHorizontalGroup(
@@ -98,37 +102,45 @@ public class Modelagem extends javax.swing.JFrame {
             .addGroup(jPanelAdicionaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelAdicionaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addComponent(jScrollPane2)
+                    .addGroup(jPanelAdicionaLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel3)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanelAdicionaLayout.createSequentialGroup()
                         .addGroup(jPanelAdicionaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane2)
                             .addGroup(jPanelAdicionaLayout.createSequentialGroup()
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton5))
-                            .addGroup(jPanelAdicionaLayout.createSequentialGroup()
-                                .addComponent(jButtonAddRestricao, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton6)))
-                        .addGap(0, 30, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(jPanelAdicionaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanelAdicionaLayout.createSequentialGroup()
+                                        .addComponent(jButtonAddRestricao, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton6))
+                                    .addGroup(jPanelAdicionaLayout.createSequentialGroup()
+                                        .addComponent(jButton3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jButton5)))
+                                .addGap(0, 30, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         jPanelAdicionaLayout.setVerticalGroup(
             jPanelAdicionaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelAdicionaLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(2, 2, 2)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelAdicionaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
                     .addComponent(jButton5))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelAdicionaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonAddRestricao)
                     .addComponent(jButton6))
-                .addGap(48, 48, 48))
+                .addContainerGap())
         );
 
         jButton4.setText("Finalizar modelagem");
@@ -163,8 +175,8 @@ public class Modelagem extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanelAdiciona, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelAdiciona, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -175,16 +187,18 @@ public class Modelagem extends javax.swing.JFrame {
                         .addComponent(jComboBoxTipoRelacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                        .addGap(118, 118, 118)
+                        .addComponent(jButton4)
+                        .addGap(0, 16, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+        restricoes = new ArrayList<>();
+        restricoesSTC = new ArrayList<>();
         if (!jTextFieldQntVariaveis.getText().isEmpty()) {
             int qntVariaveis = Integer.parseInt(jTextFieldQntVariaveis.getText());
             Restricao.setQntVariaveis(qntVariaveis);
@@ -236,6 +250,8 @@ public class Modelagem extends javax.swing.JFrame {
             restricoes = restricoesSTC;
             Matriz matriz = new Matriz(restricoes, funcaoOtimizadora);
             Principal.setMatrizStc(matriz);
+            Principal.setRestricoesModelagem(restricoes);
+            Principal.jTextArea1.setText(Principal.imprimir(matriz));
             this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Insira um modelo de problema antes!");
@@ -244,6 +260,7 @@ public class Modelagem extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -253,6 +270,7 @@ public class Modelagem extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxTipoRelacao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanelAdiciona;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
@@ -262,7 +280,7 @@ public class Modelagem extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void imprimeFuncaoOtimizadora() {
-        String str = "Z";
+        String str = "Z=";
         for (int i = 0; i < funcaoOtimizadora.length; i++) {
             String coeficiente = String.format("%.0f", funcaoOtimizadora[i]);
             if (funcaoOtimizadora[i] < 0) {
@@ -273,7 +291,7 @@ public class Modelagem extends javax.swing.JFrame {
             str += "* x" + (i + 1);
 
         }
-        str += "=0";
+        str += "";
         jTextAreaFuncaoOtimizadora.setText(str);
     }
 
@@ -306,7 +324,47 @@ public class Modelagem extends javax.swing.JFrame {
             } else {
                 str += " " + restricoes.get(j).getB();
             }
+            str += "\n";
         }
         jTextAreaRestricoes.setText(str);
+    }
+
+    private String retornaModelagem() {
+        String modelagem;
+        String str = "Z";
+        for (int i = 0; i < funcaoOtimizadora.length; i++) {
+            String coeficiente = String.format("%.0f", funcaoOtimizadora[i]);
+            if (funcaoOtimizadora[i] < 0) {
+                str += "" + coeficiente;
+            } else {
+                str += " +" + coeficiente;
+            }
+            str += "* x" + (i + 1);
+
+        }
+        str += "=0\n";
+        modelagem = str;
+        str = "";
+        for (int j = 0; j < restricoes.size(); j++) {
+            for (int i = 0; i < restricoes.get(j).getCoeficientes().length; i++) {
+                if (restricoes.get(j).getCoeficientes()[i] > 0) {
+                    String coeficiente = String.format("%.0f", restricoes.get(j).getCoeficientes()[i]);
+                    str += "+ " + coeficiente + " x" + (i + 1);
+                }
+                if (restricoes.get(j).getCoeficientes()[i] < 0) {
+                    String coeficiente = String.format("%.0f", restricoes.get(j).getCoeficientes()[i]);
+                    str += coeficiente + " x" + (i + 1);
+                }
+            }
+            str += " " + restricoes.get(j).getRelacao();
+            if (restricoes.get(j).getB() >= 0) {
+                str += " + " + restricoes.get(j).getB();
+            } else {
+                str += " " + restricoes.get(j).getB();
+            }
+            str += "\n";
+        }
+        modelagem += "\n" + str;
+        return modelagem;
     }
 }

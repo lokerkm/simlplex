@@ -5,9 +5,11 @@ import java.util.Optional;
 import javafx.scene.control.TextInputDialog;
 import javax.swing.JOptionPane;
 import simplex.Matriz;
+import simplex.Restricao;
 
 public class Principal extends javax.swing.JFrame {
 
+    public static ArrayList<Restricao> restricoesModelagem = new ArrayList<>();
     public static Matriz matrizStc;
     public Matriz matriz;
     ArrayList<String> variaveis = new ArrayList<>();
@@ -28,6 +30,7 @@ public class Principal extends javax.swing.JFrame {
         jButton2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,7 +41,7 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Realizar otimização");
+        jButton2.setText("Mostrar quadro otimo SIMPLEX");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -49,32 +52,44 @@ public class Principal extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        jButton3.setText("Mostrar otimização");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 409, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 195, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(20, 20, 20))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(40, 40, 40)
-                        .addComponent(jButton2))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -87,10 +102,35 @@ public class Principal extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (matrizStc != null) {
             matriz = matrizStc;
+            matriz.resolveSimplex(restricoesModelagem);
+
+            jTextArea1.setText("------------------------------------\n" + imprimir(matriz) + "\n------------------------------------\n");
         } else {
             JOptionPane.showMessageDialog(null, "Insira um modelo de problema antes!");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        if (matrizStc != null) {
+            matriz = matrizStc;
+            matriz.resolveSimplex(restricoesModelagem);
+            String str = "VARIAVEIS \t VALOR\n";
+            for (int i = 0; i < matriz.getBasicas().size(); i++) {
+                int coluna = matriz.getQuadro()[0].length - 1;
+                if (modelagem.tipo.equals("min") && i + 1 == matriz.getBasicas().size()) {
+                    str += matriz.getBasicas().get(i) + "\t\t" + -matriz.getQuadro()[i][coluna] + "\n";
+                } else {
+                    str += matriz.getBasicas().get(i) + "\t\t" + matriz.getQuadro()[i][coluna] + "\n";
+                }
+
+            }
+            //FAZER OS PROBLEMA LA
+            str += "\nLegenda:\n fn ->folga da enesima restirção\n xn-> enesima variavel\n z-> resultado da otimização";
+            jTextArea1.setText(str);
+        } else {
+            JOptionPane.showMessageDialog(null, "Insira um modelo de problema antes!");
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -127,12 +167,40 @@ public class Principal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    public static javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 
     public static void setMatrizStc(Matriz matrizStc) {
         Principal.matrizStc = matrizStc;
     }
 
+    public static void setRestricoesModelagem(ArrayList<Restricao> restricoesModelagem) {
+        Principal.restricoesModelagem = restricoesModelagem;
+    }
+
+    public static String imprimir(Matriz matriz) {
+
+        String str = "\t";
+        for (int i = 0; i < matriz.getCoeficientes()[0].length; i++) {
+            str += "x" + (i + 1) + "\t";
+        }
+        for (int i = 0; i < matriz.getFolgas()[0].length; i++) {
+            str += "f" + (i + 1) + "\t";
+        }
+        for (int i = 0; i < matriz.getArtificiais()[0].length; i++) {
+            str += "a" + (i + 1) + "\t";
+        }
+        str += "b\n";
+        for (int i = 0; i < matriz.getQuadro().length; i++) {
+            str += matriz.getBasicas().get(i) + "\t";
+            for (int j = 0; j < matriz.getQuadro()[0].length; j++) {
+                str += matriz.getQuadro()[i][j] + "\t";
+            }
+            str += "\n";
+        }
+        return str;
+
+    }
 }

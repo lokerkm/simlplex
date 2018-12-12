@@ -68,9 +68,9 @@ public class FuncaoOtimizadora extends javax.swing.JFrame {
         if (!jTextFieldCoeficiente.getText().isEmpty()) {
             coeficiente = Float.parseFloat(jTextFieldCoeficiente.getText());
             if (tipo.equals("min")) {
-                Modelagem.addCoeficiente(coeficiente, i);
-            } else {
                 Modelagem.addCoeficiente(-coeficiente, i);
+            } else {
+                Modelagem.addCoeficiente(coeficiente, i);
             }
             this.dispose();
         } else {
